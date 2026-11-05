@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#F8F2C8">
+<meta name="theme-color" content="#6a2cf0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Beauty Box Eco">
-<style>[hidden]{display:none!important}html{background:#F8F2C8;-webkit-text-size-adjust:100%}body{margin:0;min-height:100dvh;padding-top:env(safe-area-inset-top,0px)}</style>
+<style>[hidden]{display:none!important}html{background:#f5f2fc;-webkit-text-size-adjust:100%}body{margin:0;min-height:100dvh;padding-top:env(safe-area-inset-top,0px)}</style>
 <title>Админка Beauty Box Eco</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300..800&family=Montserrat:ital,wght@0,800;1,800;1,900&display=swap" rel="stylesheet">
 <style>
 /* Layout: sticky green brand header, one scrolling column of big rounded cards, dark bottom tab bar with a sulphur active pill. Same grammar as the luxauto41 and Luna references. */
 :root{
@@ -274,6 +274,142 @@ h2{margin:8px 0 0;font-size:19px;font-weight:700;letter-spacing:-.005em}
   .sheet{left:224px}
   .toast{left:calc(50% + 112px);bottom:28px}
 }
+
+/* ===== РОБОРАБ visual language v3 (DESIGN.md), applied to Beauty Box Eco admin ===== */
+:root{
+  --font:'Manrope','Montserrat',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --fd:'Montserrat','Manrope',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --violet:#6a2cf0; --deep:#25104f; --lime:#cdf200; --white:#fff;
+  --sulphur:#6a2cf0; --cream:#cdf200; --green:#6a2cf0; --blue:#fff; --blue-deep:#6a2cf0;
+  --bg:#f5f2fc; --surface:#fff; --ink:#1b0b42; --muted:rgba(27,11,66,.64);
+  --line:rgba(27,11,66,.12); --soft:rgba(106,44,240,.07); --chip:rgba(106,44,240,.09);
+  --nav:#1b0b42; --on-green:#fff; --on-blue:#1b0b42; --on-cream:#1b0b42; --loss:#6a2cf0;
+  --ok-bg:rgba(205,242,0,.38); --warn-bg:rgba(106,44,240,.09); --info-bg:rgba(106,44,240,.07);
+  --shadow:none; --r:48px;
+}
+body{font-family:var(--font);font-size:16px;line-height:1.5;color:var(--ink)}
+body::before{background:var(--violet)}
+:focus-visible{outline:3px solid var(--violet);outline-offset:2px}
+
+/* заголовки: Montserrat Black Italic; всё функциональное ровное */
+h1,h2,.sh-head h3,.pg-top h3{font-family:var(--fd);font-style:italic;font-weight:900;letter-spacing:-.035em;line-height:1.02}
+h1{font-size:clamp(26px,8vw,36px)}
+h2{font-size:clamp(22px,6vw,28px)}
+.pg-top h3,.sh-head h3{font-size:clamp(20px,5.4vw,26px)}
+.card .big{font-family:var(--fd);font-style:italic;font-weight:900;letter-spacing:-.04em;font-size:clamp(40px,12vw,56px);line-height:1}
+.btn,.seg button,.pill,.tag,.demo,.tabpill,.nav button,.pen,.mtitle,.eyebrow,.q .h{font-style:normal}
+.btn,.seg button,.pen,.mtitle{font-family:var(--fd);font-weight:800}
+.eyebrow,.q .h{font-family:var(--fd);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--violet)}
+.eyebrow{display:inline-block;background:var(--soft);border-radius:999px;padding:7px 12px;line-height:1;align-self:flex-start}
+.sub,.meta{color:var(--muted)}
+
+/* шапка: фиолетовая, скругление снизу, в цвет строки состояния */
+.top{background:var(--violet);color:#fff;box-shadow:none;border-radius:0 0 32px 32px;top:env(safe-area-inset-top,0px)}
+.top::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:env(safe-area-inset-top,0px);background:var(--violet)}
+.top-in{grid-template-columns:auto 1fr auto;gap:10px;padding-top:16px;padding-bottom:18px}
+.brand{display:flex;flex-direction:column;gap:3px;min-width:0}
+.logo{font-family:var(--fd);font-style:italic;font-weight:900;font-size:17px;letter-spacing:-.02em;text-transform:uppercase;color:#fff;line-height:1}
+.logo em{font-style:italic;color:var(--lime)}
+.demo{justify-self:start;border:0;padding:0;font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:rgba(255,255,255,.72);line-height:1}
+.tabpill{justify-self:center;background:var(--lime);color:var(--ink);border-radius:999px;padding:9px 16px;font-family:var(--fd);font-weight:800;font-size:13px;line-height:1;white-space:nowrap}
+.iconbtn{color:#fff;width:40px;height:40px}
+.iconbtn:hover{background:rgba(255,255,255,.16)}
+
+.wrap{padding-block:26px calc(128px + env(safe-area-inset-bottom,0px))}
+
+/* кнопки */
+.btn{background:var(--violet);color:#fff;border-radius:999px;padding:16px 28px;font-size:15px;min-height:52px;transition:transform .5s cubic-bezier(.16,1,.3,1),background .2s,color .2s}
+.btn.ghost{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
+.btn.small{border-radius:999px}
+@media (hover:hover){.btn:not([disabled]):hover{filter:none;background:var(--lime);color:var(--ink);transform:translateY(-3px) rotate(-1.5deg) scale(1.04)}}
+
+/* карточки: лайм, фиолетовый, белый, индиго; без теней */
+.card{border-radius:36px;padding:22px 24px}
+.card.plain,.banner,.mini{box-shadow:none;background:var(--surface)}
+.card.plain{box-shadow:inset 0 0 0 1.5px var(--line)}
+.card.green{background:var(--violet);color:#fff}
+.card.green .big{color:var(--lime)}
+.card.sulphur{background:var(--lime);color:var(--ink)}
+.card.blue{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+.card.blue .big{color:var(--violet)}
+.card.cream{background:var(--deep);color:#fff}
+.card.cream .big{color:var(--lime)}
+.card .lbl{font-weight:700;opacity:1}
+.ai-list{border-top:1.5px solid rgba(255,255,255,.2)}
+.ai-list .track{background:rgba(255,255,255,.16)}
+.ai-list .track i{background:var(--lime)}
+.mini{border-radius:36px;box-shadow:inset 0 0 0 1.5px var(--line)}
+.lock{background:var(--soft);border-radius:28px}
+
+/* подсказки, чипы, метки */
+.hint{border-radius:22px}
+.hint.warn{background:var(--soft);box-shadow:inset 0 0 0 1.5px var(--violet)}
+.chip.good{background:var(--ok-bg)}
+.pill{background:var(--soft);color:var(--violet);font-weight:800}
+
+/* переключатель периода: капсула, активная лаймовая с ровным ink */
+.seg{background:var(--soft)}
+.seg button[aria-pressed="true"]{background:var(--lime);color:var(--ink)}
+
+/* график и полосы */
+.chart .bar{background:var(--violet)}
+.chart .bar.peak{background:var(--lime);box-shadow:inset 0 0 0 2px var(--ink)}
+.track{background:var(--chip)}
+.track i{background:var(--violet)}
+.src>div:nth-child(1) .track i{background:var(--violet)}
+.src>div:nth-child(2) .track i{background:var(--deep)}
+.src>div:nth-child(3) .track i{background:#9a6bff}
+.src>div:nth-child(n+4) .track i{background:#c7a8ff}
+.loss{color:var(--violet);font-weight:800}
+
+/* поля */
+.field input{border-radius:20px;border:2px solid var(--line)}
+.field input:focus{outline:0;border-color:var(--violet)}
+
+/* карта сайта и плашки с названиями */
+.tap{outline:1px solid var(--line)}
+.m-head em,.m-head b{font-family:var(--fd);font-weight:800}
+.m-head em{color:var(--violet)}
+.mtitle{background:var(--surface);box-shadow:inset 0 0 0 2px rgba(106,44,240,.28);border-radius:999px}
+.mtitle.cap{border-radius:24px}
+.pen{box-shadow:none;background:var(--ink);color:#fff}
+.tapw.c .pen{box-shadow:0 0 0 2px var(--surface)}
+.mtitle .pm{background:var(--ink);color:#fff}
+.x{background:var(--soft)}
+.sheet{background:var(--bg)}
+.toast{background:var(--ink);color:var(--lime);box-shadow:none;bottom:calc(116px + env(safe-area-inset-bottom,0px));font-family:var(--fd);font-weight:800}
+
+/* тачбар: отдельные стеклянные плитки, только иконки */
+.nav{left:0;right:0;bottom:0;background:transparent;box-shadow:none;pointer-events:none;
+  padding:0 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.nav-in{max-width:none;margin:0 auto;display:flex;justify-content:center;gap:10px}
+.nav button{pointer-events:auto;flex:1 1 0;max-width:84px;height:68px;min-height:68px;padding:0;border-radius:26px;
+  display:grid;place-items:center;font-size:0;gap:0;opacity:1;color:var(--ink);
+  background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.75);
+  -webkit-backdrop-filter:blur(20px) saturate(1.7);backdrop-filter:blur(20px) saturate(1.7);
+  box-shadow:0 10px 24px -14px rgba(0,0,0,.3);transition:transform .35s cubic-bezier(.16,1,.3,1)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.nav button{background:rgba(255,255,255,.9)}}
+.nav button svg.i{width:28px;height:28px;stroke-width:1.75}
+.nav button[aria-current="page"]{background:rgba(255,255,255,.94);color:var(--violet);font-weight:400;opacity:1}
+@media (hover:hover){.nav button:hover{transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){.nav button,.btn{transition:none}.btn:hover,.nav button:hover{transform:none!important}}
+
+/* компьютер: вертикальное меню слева, пункты таблетками */
+@media (min-width:900px){
+  body{padding-left:240px}
+  body::before{left:240px}
+  .nav{top:0;bottom:0;right:auto;left:0;width:240px;padding:24px 16px;background:var(--surface);box-shadow:inset -1px 0 0 var(--line);pointer-events:auto}
+  .nav-in{flex-direction:column;justify-content:flex-start;gap:8px}
+  .nav button{flex:none;max-width:none;width:100%;height:52px;min-height:52px;display:flex;align-items:center;justify-content:flex-start;gap:12px;padding:0 20px;border-radius:999px;
+    font-size:15px;font-family:var(--fd);font-weight:800;background:transparent;border:0;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none}
+  .nav button svg.i{width:24px;height:24px}
+  .nav button:hover{background:var(--soft);transform:none}
+  .nav button[aria-current="page"]{background:var(--violet);color:#fff}
+  .top-in{max-width:760px}
+  .wrap{max-width:640px;padding-block:32px 56px}
+  .sheet{left:240px}
+  .toast{left:calc(50% + 120px);bottom:28px}
+}
 </style>
 </head>
 <body>
@@ -281,8 +417,8 @@ h2{margin:8px 0 0;font-size:19px;font-weight:700;letter-spacing:-.005em}
 
 <header class="top">
   <div class="top-in">
-    <span class="demo">Демо-данные</span>
-    <div class="logo">Beauty Box <em>Eco</em></div>
+    <div class="brand"><div class="logo">Beauty Box <em>Eco</em></div><span class="demo">Демо-данные</span></div>
+    <span class="tabpill" id="tabname">Сайт</span>
     <button type="button" class="iconbtn" data-tab="more" aria-label="Меню">
       <svg class="i" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="5.5" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="12" cy="18.5" r="1.8"/></svg>
     </button>
@@ -337,10 +473,10 @@ h2{margin:8px 0 0;font-size:19px;font-weight:700;letter-spacing:-.005em}
 
 <nav class="nav" aria-label="Разделы">
   <div class="nav-in">
-    <button type="button" data-tab="site" aria-current="page">
+    <button type="button" data-tab="site" aria-current="page" aria-label="Сайт">
       <svg class="i" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="3"/><path d="M3.5 9h17M8 14h4"/></svg>Сайт
     </button>
-    <button type="button" data-tab="stats">
+    <button type="button" data-tab="stats" aria-label="Аналитика">
       <svg class="i" viewBox="0 0 24 24"><path d="M5 20V11M12 20V4M19 20v-6"/></svg>Аналитика
     </button>
   </div>
@@ -675,6 +811,7 @@ h2{margin:8px 0 0;font-size:19px;font-weight:700;letter-spacing:-.005em}
     document.querySelectorAll('.nav button').forEach(function(b){
       if(b.getAttribute('data-tab')===name){ b.setAttribute('aria-current','page'); } else { b.removeAttribute('aria-current'); }
     });
+    var tn=$('tabname'); if(tn) tn.textContent = ({site:'Сайт',stats:'Аналитика',more:'Меню'})[name]||'';
     window.scrollTo(0,0);
     try{ localStorage.setItem('bbx-tab',name); }catch(e){}
   }
