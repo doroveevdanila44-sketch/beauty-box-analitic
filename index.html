@@ -349,33 +349,23 @@ h2{font-size:clamp(22px,6vw,28px)}
 .scroll-status { display: none; }
 @media (max-width:899px) {
   html, body { overscroll-behavior-y: none; }
-  .scroll-status { display: block; }
   .scroll-status {
+    display: block;
     position: fixed;
     inset: 0 0 auto;
-    z-index: 42;
-    height: calc(max(var(--rr-safe-top), 6px) + 46px);
+    z-index: 40;
+    /* У safe area есть запас под островом. Стекло заканчивается у его нижнего края. */
+    height: max(0px, calc(var(--rr-safe-top) - 8px));
     pointer-events: none;
     opacity: 0;
     background: linear-gradient(to bottom, rgb(255 255 255 / .42), rgb(255 255 255 / .18) 55%, transparent);
     -webkit-backdrop-filter: var(--rr-glass-light-filter);
     backdrop-filter: var(--rr-glass-light-filter);
-    -webkit-mask-image: linear-gradient(#000 45%, transparent);
-    mask-image: linear-gradient(#000 45%, transparent);
-    transition: opacity .22s var(--rr-ease);
+    -webkit-mask-image: linear-gradient(#000 80%, transparent);
+    mask-image: linear-gradient(#000 80%, transparent);
   }
-  body[data-header-hidden] .scroll-status { opacity: 1; }
-  .top {
-    transition: transform .22s var(--rr-ease), visibility 0s;
-  }
-  body[data-header-hidden] .top {
-    transform: translateY(-100%);
-    visibility: hidden;
-    transition: transform .22s var(--rr-ease), visibility 0s .22s;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .top, body[data-header-hidden] .top, .scroll-status { transition: none; }
-  }
+  .top { transform: translateY(calc(-1 * var(--bbx-header-offset, 0px))); }
+  body[data-header-hidden] .top { visibility: hidden; }
   @media (prefers-reduced-transparency: reduce) {
     .scroll-status {
       background: var(--rr-bg);
@@ -785,37 +775,56 @@ h2{font-size:clamp(22px,6vw,28px)}
       '<div class="card plain"><div class="eyebrow">Что ищут в Google</div>'+qHtml+'</div>';
   }
 
-  /* При движении вниз остаётся только стекло под системной строкой. */
+  /* Шапка смещается на дельту прокрутки и возвращается при смене направления. */
   var mobileHeader = window.matchMedia('(max-width:899px)');
   var topBar = document.querySelector('header.top');
+  var statusBar = document.querySelector('.scroll-status');
   var themeMeta = document.querySelector('meta[name="theme-color"]');
   var topColor = themeMeta.content;
-  var lastY = 0;
+  var headerOffset = 0;
+  var lastY = scrollPosition();
 
-  function showHeader(hidden){
+  function scrollPosition(){
+    var root = document.scrollingElement;
+    return Math.max(0, Math.min(window.scrollY, root.scrollHeight - root.clientHeight));
+  }
+
+  function positionHeader(offset){
+    var height = topBar.offsetHeight;
+    var statusHeight = statusBar.offsetHeight;
+    headerOffset = Math.max(0, Math.min(offset, height));
+    var hidden = headerOffset >= height;
+    var opacity = statusHeight ? Math.max(0, (headerOffset - height + statusHeight) / statusHeight) : 0;
+    var theme = hidden || opacity >= .5 ? '#f5f2fc' : topColor;
+    topBar.style.setProperty('--bbx-header-offset', headerOffset + 'px');
+    statusBar.style.opacity = opacity;
     document.body.toggleAttribute('data-header-hidden', hidden);
-    themeMeta.content = hidden ? '#f5f2fc' : topColor;
+    if(themeMeta.content !== theme) themeMeta.content = theme;
+  }
+
+  function resetHeader(){
+    lastY = scrollPosition();
+    positionHeader(0);
   }
 
   function syncHeader(){
-    var root = document.scrollingElement;
-    var y = Math.max(0, Math.min(window.scrollY, root.scrollHeight - root.clientHeight));
-    if(!mobileHeader.matches || y <= 4 || topBar.querySelector(':focus-visible')){
-      lastY = y;
-      showHeader(false);
-      return;
-    }
-    if(Math.abs(y - lastY) < 8) return;
-    showHeader(y > lastY);
+    var y = scrollPosition();
+    var delta = y - lastY;
     lastY = y;
+    if(!mobileHeader.matches || y === 0 || topBar.querySelector(':focus-visible')){
+      positionHeader(0);
+    } else {
+      positionHeader(headerOffset + delta);
+    }
   }
 
   window.addEventListener('scroll', syncHeader, {passive:true});
-  window.addEventListener('pageshow', function(){
-    lastY = Math.max(0, window.scrollY);
-    showHeader(false);
+  window.addEventListener('resize', syncHeader);
+  window.addEventListener('pageshow', resetHeader);
+  mobileHeader.addEventListener('change', resetHeader);
+  topBar.addEventListener('focusin', function(){
+    if(topBar.querySelector(':focus-visible')) resetHeader();
   });
-  mobileHeader.addEventListener('change', syncHeader);
 
   /* ---------- вкладки ---------- */
   function setTab(name){
@@ -824,8 +833,7 @@ h2{font-size:clamp(22px,6vw,28px)}
       if(b.getAttribute('data-tab')===name){ b.setAttribute('aria-current','page'); } else { b.removeAttribute('aria-current'); }
     });
     window.scrollTo(0,0);
-    lastY = 0;
-    showHeader(false);
+    resetHeader();
     try{ localStorage.setItem('bbx-tab',name); }catch(e){}
   }
 
