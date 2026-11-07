@@ -346,34 +346,7 @@ h2{font-size:clamp(22px,6vw,28px)}
 .top-in{min-width:0}
 .top .rr-header-action{grid-column:3;justify-self:end}
 .nav{display:contents}
-.scroll-status { display: none; }
-@media (max-width:899px) {
-  html, body { overscroll-behavior-y: none; }
-  .scroll-status {
-    display: block;
-    position: fixed;
-    inset: 0 0 auto;
-    z-index: 40;
-    /* У safe area есть запас под островом. Стекло заканчивается у его нижнего края. */
-    height: max(0px, calc(var(--rr-safe-top) - 8px));
-    pointer-events: none;
-    opacity: 0;
-    background: linear-gradient(to bottom, rgb(255 255 255 / .42), rgb(255 255 255 / .18) 55%, transparent);
-    -webkit-backdrop-filter: var(--rr-glass-light-filter);
-    backdrop-filter: var(--rr-glass-light-filter);
-    -webkit-mask-image: linear-gradient(#000 80%, transparent);
-    mask-image: linear-gradient(#000 80%, transparent);
-  }
-  .top { transform: translateY(calc(-1 * var(--bbx-header-offset, 0px))); }
-  body[data-header-hidden] .top { visibility: hidden; }
-  @media (prefers-reduced-transparency: reduce) {
-    .scroll-status {
-      background: var(--rr-bg);
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-    }
-  }
-}
+@media (max-width:899px) { html, body { overscroll-behavior-y: none; } }
 @media (min-width:900px){
   .wrap{max-width:640px;position:relative;left:calc(var(--rr-rail-width) / 2);padding-block:32px 56px}
   .sheet{left:var(--rr-rail-width)}
@@ -385,8 +358,8 @@ h2{font-size:clamp(22px,6vw,28px)}
 <body>
 
 
-<div class="scroll-status" aria-hidden="true"></div>
-<header class="top rr-header">
+<div class="rr-scroll-status" aria-hidden="true"></div>
+<header class="top rr-header" data-rr-scroll-header>
   <div class="top-in rr-header-row">
     <div class="rr-wordmark">РОБОРАБ</div>
     <button type="button" class="rr-header-action" data-tab="more" aria-label="Меню">
@@ -775,57 +748,6 @@ h2{font-size:clamp(22px,6vw,28px)}
       '<div class="card plain"><div class="eyebrow">Что ищут в Google</div>'+qHtml+'</div>';
   }
 
-  /* Шапка смещается на дельту прокрутки и возвращается при смене направления. */
-  var mobileHeader = window.matchMedia('(max-width:899px)');
-  var topBar = document.querySelector('header.top');
-  var statusBar = document.querySelector('.scroll-status');
-  var themeMeta = document.querySelector('meta[name="theme-color"]');
-  var topColor = themeMeta.content;
-  var headerOffset = 0;
-  var lastY = scrollPosition();
-
-  function scrollPosition(){
-    var root = document.scrollingElement;
-    return Math.max(0, Math.min(window.scrollY, root.scrollHeight - root.clientHeight));
-  }
-
-  function positionHeader(offset){
-    var height = topBar.offsetHeight;
-    var statusHeight = statusBar.offsetHeight;
-    headerOffset = Math.max(0, Math.min(offset, height));
-    var hidden = headerOffset >= height;
-    var opacity = statusHeight ? Math.max(0, (headerOffset - height + statusHeight) / statusHeight) : 0;
-    var theme = hidden || opacity >= .5 ? '#f5f2fc' : topColor;
-    topBar.style.setProperty('--bbx-header-offset', headerOffset + 'px');
-    statusBar.style.opacity = opacity;
-    document.body.toggleAttribute('data-header-hidden', hidden);
-    if(themeMeta.content !== theme) themeMeta.content = theme;
-  }
-
-  function resetHeader(){
-    lastY = scrollPosition();
-    positionHeader(0);
-  }
-
-  function syncHeader(){
-    var y = scrollPosition();
-    var delta = y - lastY;
-    lastY = y;
-    if(!mobileHeader.matches || y === 0 || topBar.querySelector(':focus-visible')){
-      positionHeader(0);
-    } else {
-      positionHeader(headerOffset + delta);
-    }
-  }
-
-  window.addEventListener('scroll', syncHeader, {passive:true});
-  window.addEventListener('resize', syncHeader);
-  window.addEventListener('pageshow', resetHeader);
-  mobileHeader.addEventListener('change', resetHeader);
-  topBar.addEventListener('focusin', function(){
-    if(topBar.querySelector(':focus-visible')) resetHeader();
-  });
-
   /* ---------- вкладки ---------- */
   function setTab(name){
     ['site','stats','more'].forEach(function(t){ $('view-'+t).hidden = t!==name; });
@@ -833,7 +755,7 @@ h2{font-size:clamp(22px,6vw,28px)}
       if(b.getAttribute('data-tab')===name){ b.setAttribute('aria-current','page'); } else { b.removeAttribute('aria-current'); }
     });
     window.scrollTo(0,0);
-    resetHeader();
+    document.dispatchEvent(new Event('rr:header-reset'));
     try{ localStorage.setItem('bbx-tab',name); }catch(e){}
   }
 
@@ -864,5 +786,9 @@ h2{font-size:clamp(22px,6vw,28px)}
 })();
 </script>
 
+<script type="module">
+  import { attachRoborabHeader } from './roborab-header.js';
+  attachRoborabHeader(document.querySelector('header.top'), document.querySelector('.rr-scroll-status'));
+</script>
 </body>
 </html>
