@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#6a2cf0">
+<meta name="theme-color" content="#141414">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Beauty Box Eco">
-<style>[hidden]{display:none!important}html{background:#f5f2fc;-webkit-text-size-adjust:100%}body{margin:0;min-height:100dvh}</style>
+<style>[hidden]{display:none!important}html{background:#f4f4f2;-webkit-text-size-adjust:100%}body{margin:0;min-height:100dvh}</style>
 <title>Админка Beauty Box Eco</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -251,12 +251,12 @@ h2{margin:8px 0 0;font-size:19px;font-weight:700;letter-spacing:-.005em}
 :root{
   --font:var(--rr-font);
   --fd:var(--rr-display);
-  --violet:var(--rr-violet); --deep:#25104f; --lime:var(--rr-lime); --white:#fff;
-  --sulphur:#6a2cf0; --cream:#cdf200; --green:#6a2cf0; --blue:#fff; --blue-deep:#6a2cf0;
-  --bg:#f5f2fc; --surface:#fff; --ink:#1b0b42; --muted:rgba(27,11,66,.64);
-  --line:rgba(27,11,66,.12); --soft:rgba(106,44,240,.07); --chip:rgba(106,44,240,.09);
-  --nav:#1b0b42; --on-green:#fff; --on-blue:#1b0b42; --on-cream:#1b0b42; --loss:#6a2cf0;
-  --ok-bg:rgba(205,242,0,.38); --warn-bg:rgba(106,44,240,.09); --info-bg:rgba(106,44,240,.07);
+  --violet:var(--rr-violet); --deep:#232323; --lime:var(--rr-lime); --white:#fff;
+  --sulphur:#141414; --cream:#7b4dff; --green:#141414; --blue:#fff; --blue-deep:#141414;
+  --bg:#f4f4f2; --surface:#fff; --ink:#141414; --muted:rgba(20,20,20,.64);
+  --line:rgba(20,20,20,.12); --soft:rgba(123,77,255,.07); --chip:rgba(123,77,255,.09);
+  --nav:#141414; --on-green:#fff; --on-blue:#141414; --on-cream:#141414; --loss:#141414;
+  --ok-bg:rgba(123,77,255,.38); --warn-bg:rgba(123,77,255,.09); --info-bg:rgba(123,77,255,.07);
   --shadow:none; --r:48px;
 }
 body{font-family:var(--font);font-size:16px;line-height:1.5;color:var(--ink)}
@@ -283,7 +283,7 @@ h2{font-size:clamp(22px,6vw,28px)}
 .btn{background:var(--violet);color:#fff;border-radius:var(--rr-control-radius);padding:0 16px;font-size:15px;min-height:var(--rr-control-height);transition:transform .5s cubic-bezier(.16,1,.3,1),background .2s,color .2s}
 .btn.ghost{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
 .btn.small{border-radius:999px}
-@media (hover:hover){.btn:not([disabled]):hover{filter:none;background:var(--lime);color:var(--ink);}}
+@media (hover:hover){.btn:not([disabled]):hover{filter:none;background:var(--lime);color:#fff;}}
 
 /* карточки: лайм, фиолетовый, белый, индиго; без теней */
 .card{border-radius:36px;padding:22px 24px}
@@ -291,7 +291,7 @@ h2{font-size:clamp(22px,6vw,28px)}
 .card.plain{box-shadow:inset 0 0 0 1.5px var(--line)}
 .card.green{background:var(--violet);color:#fff}
 .card.green .big{color:var(--lime)}
-.card.sulphur{background:var(--lime);color:var(--ink)}
+.card.sulphur{background:var(--lime);color:#fff}
 .card.blue{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
 .card.blue .big{color:var(--violet)}
 .card.cream{background:var(--deep);color:#fff}
@@ -311,7 +311,7 @@ h2{font-size:clamp(22px,6vw,28px)}
 
 /* переключатель периода: капсула, активная лаймовая с ровным ink */
 .seg{background:var(--soft)}
-.seg button[aria-pressed="true"]{background:var(--lime);color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--lime);color:#fff}
 
 /* график и полосы */
 .chart .bar{background:var(--violet)}
@@ -332,14 +332,14 @@ h2{font-size:clamp(22px,6vw,28px)}
 .tap{outline:1px solid var(--line)}
 .m-head em,.m-head b{font-family:var(--fd);font-weight:800}
 .m-head em{color:var(--violet)}
-.mtitle{background:var(--surface);box-shadow:inset 0 0 0 2px rgba(106,44,240,.28);border-radius:999px}
+.mtitle{background:var(--surface);box-shadow:inset 0 0 0 2px rgba(123,77,255,.28);border-radius:999px}
 .mtitle.cap{border-radius:24px}
 .pen{box-shadow:none;background:var(--ink);color:#fff}
 .tapw.c .pen{box-shadow:0 0 0 2px var(--surface)}
 .mtitle .pm{background:var(--ink);color:#fff}
 .x{background:var(--soft)}
 .sheet{background:var(--bg)}
-.toast{background:var(--ink);color:var(--lime);box-shadow:none;bottom:calc(116px + env(safe-area-inset-bottom,0px));font-family:var(--fd);font-weight:800}
+.toast{background:var(--ink);color:#b79bff;box-shadow:none;bottom:calc(116px + env(safe-area-inset-bottom,0px));font-family:var(--fd);font-weight:800}
 
 /* Оболочка редактора */
 .top{position:sticky;top:0;z-index:41}
